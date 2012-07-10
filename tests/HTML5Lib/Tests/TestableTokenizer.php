@@ -37,7 +37,7 @@ class TestableTokenizer extends Tokenizer
                 $this->emitToken(array_shift($this->stream->errors), false);
             }
         }
-        
+
         // tree handling code omitted
         switch ($token['type']) {
             case self::DOCTYPE:

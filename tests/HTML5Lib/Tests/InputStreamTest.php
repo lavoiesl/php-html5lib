@@ -7,29 +7,29 @@ use UnitTestCase;
 require_once __DIR__ . '/../../autorun.php';
 
 class InputStreamTest extends UnitTestCase
-{   
+{
     public function invalidReplaceTestHandler($input, $name) {
         $stream = new InputStream($input);
         $this->assertIdentical("\xEF\xBF\xBD", $stream->remainingChars(), $name);
     }
-    
+
     public function testInvalidReplace() {
         // Above U+10FFFF
         $this->invalidReplaceTestHandler("\xF5\x90\x80\x80", 'U+110000');
-        
+
         // Incomplete
         $this->invalidReplaceTestHandler("\xDF", 'Incomplete two byte sequence (missing final byte)');
         $this->invalidReplaceTestHandler("\xEF\xBF", 'Incomplete three byte sequence (missing final byte)');
         $this->invalidReplaceTestHandler("\xF4\xBF\xBF", 'Incomplete four byte sequence (missing final byte)');
-        
+
         // Min/max continuation bytes
         $this->invalidReplaceTestHandler("\x80", 'Lone 80 continuation byte');
         $this->invalidReplaceTestHandler("\xBF", 'Lone BF continuation byte');
-        
+
         // Invalid bytes (these can never occur)
         $this->invalidReplaceTestHandler("\xFE", 'Invalid FE byte');
         $this->invalidReplaceTestHandler("\xFF", 'Invalid FF byte');
-        
+
         // Min/max overlong
         $this->invalidReplaceTestHandler("\xC0\x80", 'Overlong representation of U+0000');
         $this->invalidReplaceTestHandler("\xE0\x80\x80", 'Overlong representation of U+0000');
@@ -40,39 +40,39 @@ class InputStreamTest extends UnitTestCase
         $this->invalidReplaceTestHandler("\xE0\x9F\xBF", 'Overlong representation of U+07FF');
         $this->invalidReplaceTestHandler("\xF0\x8F\xBF\xBF", 'Overlong representation of U+FFFF');
     }
-    
+
     public function testStripLeadingBOM() {
         $leading = new InputStream("\xEF\xBB\xBFa");
         $this->assertIdentical('a', $leading->char(), 'BOM should be stripped');
     }
-    
+
     public function testZWNBSP() {
         $stream = new InputStream("a\xEF\xBB\xBF");
         $this->assertIdentical("a\xEF\xBB\xBF", $stream->remainingChars(), 'A non-leading U+FEFF (BOM/ZWNBSP) should remain');
     }
-    
+
     public function testNull() {
         $stream = new InputStream("\0\0\0");
         $this->assertIdentical("\xEF\xBF\xBD\xEF\xBF\xBD\xEF\xBF\xBD", $stream->remainingChars(), 'Null character should be replaced by U+FFFD');
         $this->assertIdentical(3, count($stream->errors), 'Null character should be throw parse error');
     }
-    
+
     public function testCRLF() {
         $stream = new InputStream("\r\n");
         $this->assertIdentical("\n", $stream->remainingChars(), 'CRLF should be replaced by LF');
     }
-    
+
     public function testCR() {
         $stream = new InputStream("\r");
         $this->assertIdentical("\n", $stream->remainingChars(), 'CR should be replaced by LF');
     }
-    
+
     public function invalidParseErrorTestHandler($input, $numErrors, $name) {
         $stream = new InputStream($input);
         $this->assertIdentical($input, $stream->remainingChars(), $name . ' (stream content)');
         $this->assertIdentical($numErrors, count($stream->errors), $name . ' (number of errors)');
     }
-    
+
     public function testInvalidParseError() {
         // C0 controls (except U+0000 and U+000D due to different handling)
         $this->invalidParseErrorTestHandler("\x01", 1, 'U+0001 (C0 control)');
@@ -105,15 +105,15 @@ class InputStreamTest extends UnitTestCase
         $this->invalidParseErrorTestHandler("\x1D", 1, 'U+001D (C0 control)');
         $this->invalidParseErrorTestHandler("\x1E", 1, 'U+001E (C0 control)');
         $this->invalidParseErrorTestHandler("\x1F", 1, 'U+001F (C0 control)');
-        
+
         // DEL (U+007F)
         $this->invalidParseErrorTestHandler("\x7F", 1, 'U+007F');
-        
+
         // C1 Controls
         $this->invalidParseErrorTestHandler("\xC2\x80", 1, 'U+0080 (C1 control)');
         $this->invalidParseErrorTestHandler("\xC2\x9F", 1, 'U+009F (C1 control)');
         $this->invalidParseErrorTestHandler("\xC2\xA0", 0, 'U+00A0 (first codepoint above highest C1 control)');
-        
+
         // Single UTF-16 surrogates
         $this->invalidParseErrorTestHandler("\xED\xA0\x80", 1, 'U+D800 (UTF-16 surrogate character)');
         $this->invalidParseErrorTestHandler("\xED\xAD\xBF", 1, 'U+DB7F (UTF-16 surrogate character)');
@@ -122,7 +122,7 @@ class InputStreamTest extends UnitTestCase
         $this->invalidParseErrorTestHandler("\xED\xB0\x80", 1, 'U+DC00 (UTF-16 surrogate character)');
         $this->invalidParseErrorTestHandler("\xED\xBE\x80", 1, 'U+DF80 (UTF-16 surrogate character)');
         $this->invalidParseErrorTestHandler("\xED\xBF\xBF", 1, 'U+DFFF (UTF-16 surrogate character)');
-        
+
         // Paired UTF-16 surrogates
         $this->invalidParseErrorTestHandler("\xED\xA0\x80\xED\xB0\x80", 2, 'U+D800 U+DC00 (paired UTF-16 surrogates)');
         $this->invalidParseErrorTestHandler("\xED\xA0\x80\xED\xBF\xBF", 2, 'U+D800 U+DFFF (paired UTF-16 surrogates)');
@@ -132,11 +132,11 @@ class InputStreamTest extends UnitTestCase
         $this->invalidParseErrorTestHandler("\xED\xAE\x80\xED\xBF\xBF", 2, 'U+DB80 U+DFFF (paired UTF-16 surrogates)');
         $this->invalidParseErrorTestHandler("\xED\xAF\xBF\xED\xB0\x80", 2, 'U+DBFF U+DC00 (paired UTF-16 surrogates)');
         $this->invalidParseErrorTestHandler("\xED\xAF\xBF\xED\xBF\xBF", 2, 'U+DBFF U+DFFF (paired UTF-16 surrogates)');
-        
+
         // Charcters surrounding surrogates
         $this->invalidParseErrorTestHandler("\xED\x9F\xBF", 0, 'U+D7FF (one codepoint below lowest surrogate codepoint)');
         $this->invalidParseErrorTestHandler("\xEF\xBF\xBD", 0, 'U+DE00 (one codepoint above highest surrogate codepoint)');
-        
+
         // Permanent noncharacters
         $this->invalidParseErrorTestHandler("\xEF\xB7\x90", 1, 'U+FDD0 (permanent noncharacter)');
         $this->invalidParseErrorTestHandler("\xEF\xB7\xAF", 1, 'U+FDEF (permanent noncharacter)');

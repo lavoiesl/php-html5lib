@@ -372,8 +372,8 @@ class TreeBuilder {
 
         /* A start tag whose tag name is "html" */
         } elseif($token['type'] === Tokenizer::STARTTAG && $token['name'] == 'html') {
-            /* Create an element for the token in the HTML namespace. Append it 
-             * to the Document  object. Put this element in the stack of open 
+            /* Create an element for the token in the HTML namespace. Append it
+             * to the Document  object. Put this element in the stack of open
              * elements. */
             $html = $this->insertElement($token, false);
             $this->dom->appendChild($html);
@@ -547,11 +547,11 @@ class TreeBuilder {
             // Uhhh... XSCRIPT
 
             /* 3. If the parser was originally created for the HTML
-             * fragment parsing algorithm, then mark the script element as 
+             * fragment parsing algorithm, then mark the script element as
              * "already executed". (fragment case) */
             // ditto... XSCRIPT
 
-            /* 4. Append the new element to the current node  and push it onto 
+            /* 4. Append the new element to the current node  and push it onto
              * the stack of open elements.  */
             end($this->stack)->appendChild($node);
             $this->stack[] = $node;
@@ -793,14 +793,14 @@ class TreeBuilder {
                         $this->ignored = true;
                         // Ignore
                     } else {
-                        /* 1. Remove the second element on the stack of open 
+                        /* 1. Remove the second element on the stack of open
                          * elements from its parent node, if it has one.  */
                         if($this->stack[1]->parentNode) {
                             $this->stack[1]->parentNode->removeChild($this->stack[1]);
                         }
 
-                        /* 2. Pop all the nodes from the bottom of the stack of 
-                         * open elements, from the current node up to the root 
+                        /* 2. Pop all the nodes from the bottom of the stack of
+                         * open elements, from the current node up to the root
                          * html element. */
                         array_splice($this->stack, 1);
 
@@ -1517,7 +1517,7 @@ class TreeBuilder {
                     $node = $this->form_pointer;
                     /* Set the form element pointer  to null. */
                     $this->form_pointer = null;
-                    /* If node is null or the stack of open elements does not 
+                    /* If node is null or the stack of open elements does not
                         * have node in scope, then this is a parse error; ignore the token. */
                     if ($node === null || !in_array($node, $this->stack)) {
                         // parse error
@@ -2731,9 +2731,9 @@ class TreeBuilder {
             ) || $token['type'] === Tokenizer::ENDTAG
         ) {
             $this->processWithRulesFor($token, $this->secondary_mode);
-            /* If, after doing so, the insertion mode is still "in foreign 
-             * content", but there is no element in scope that has a namespace 
-             * other than the HTML namespace, switch the insertion mode to the 
+            /* If, after doing so, the insertion mode is still "in foreign
+             * content", but there is no element in scope that has a namespace
+             * other than the HTML namespace, switch the insertion mode to the
              * secondary insertion mode. */
             if ($this->mode === self::IN_FOREIGN_CONTENT) {
                 $found = false;
@@ -2756,11 +2756,11 @@ class TreeBuilder {
             }
         } elseif ($token['type'] === Tokenizer::EOF || (
         $token['type'] === Tokenizer::STARTTAG &&
-        (in_array($token['name'], array('b', "big", "blockquote", "body", "br", 
-        "center", "code", "dd", "div", "dl", "dt", "em", "embed", "h1", "h2", 
-        "h3", "h4", "h5", "h6", "head", "hr", "i", "img", "li", "listing", 
-        "menu", "meta", "nobr", "ol", "p", "pre", "ruby", "s",  "small", 
-        "span", "strong", "strike",  "sub", "sup", "table", "tt", "u", "ul", 
+        (in_array($token['name'], array('b', "big", "blockquote", "body", "br",
+        "center", "code", "dd", "div", "dl", "dt", "em", "embed", "h1", "h2",
+        "h3", "h4", "h5", "h6", "head", "hr", "i", "img", "li", "listing",
+        "menu", "meta", "nobr", "ol", "p", "pre", "ruby", "s",  "small",
+        "span", "strong", "strike",  "sub", "sup", "table", "tt", "u", "ul",
         "var")) || ($token['name'] === 'font' && ($this->getAttr($token, 'color') ||
         $this->getAttr($token, 'face') || $this->getAttr($token, 'size')))))) {
             // XERROR: parse error
@@ -2914,9 +2914,9 @@ class TreeBuilder {
                 elements. */
                 array_pop($this->stack);
 
-                /* If the parser was not originally created as part of the HTML 
-                 * fragment parsing algorithm  (fragment case), and the current 
-                 * node is no longer a frameset element, then switch the 
+                /* If the parser was not originally created as part of the HTML
+                 * fragment parsing algorithm  (fragment case), and the current
+                 * node is no longer a frameset element, then switch the
                  * insertion mode to "after frameset". */
                 $this->mode = self::AFTER_FRAMESET;
             }
@@ -3275,8 +3275,8 @@ class TreeBuilder {
             /* 2. Let node be the last node in the stack of open elements. */
             $node = $this->stack[$n];
 
-            /* 3. If node is the first node in the stack of open elements, then 
-             * set last to true and set node to the context  element. (fragment 
+            /* 3. If node is the first node in the stack of open elements, then
+             * set last to true and set node to the context  element. (fragment
              * case) */
             if($this->stack[0]->isSameNode($node)) {
                 $last = true;
@@ -3325,9 +3325,9 @@ class TreeBuilder {
                 $this->mode = self::IN_TABLE;
                 break;
 
-            /* 11. If node is an element from the MathML namespace or the SVG 
-             * namespace, then switch the insertion mode to "in foreign 
-             * content", let the secondary insertion mode be "in body", and 
+            /* 11. If node is an element from the MathML namespace or the SVG
+             * namespace, then switch the insertion mode to "in foreign
+             * content", let the secondary insertion mode be "in body", and
              * abort these steps. */
             } elseif($node->namespaceURI === self::NS_SVG ||
             $node->namespaceURI === self::NS_MATHML) {
@@ -3422,9 +3422,9 @@ class TreeBuilder {
     }
 
     private function getCurrentTable() {
-        /* The current table is the last table  element in the stack of open 
-         * elements, if there is one. If there is no table element in the stack 
-         * of open elements (fragment case), then the current table is the 
+        /* The current table is the last table  element in the stack of open
+         * elements, if there is one. If there is no table element in the stack
+         * of open elements (fragment case), then the current table is the
          * first element in the stack of open elements (the html element). */
         for ($i = count($this->stack) - 1; $i >= 0; $i--) {
             if ($this->stack[$i]->tagName === 'table') {
@@ -3468,16 +3468,16 @@ class TreeBuilder {
     public function fosterParent($node) {
         $foster_parent = $this->getFosterParent();
         $table = $this->getCurrentTable(); // almost equivalent to last table element, except it can be html
-        /* When a node node is to be foster parented, the node node  must be 
-         * inserted into the foster parent element, and the current table must 
-         * be marked as tainted. (Once the current table has been tainted, 
-         * whitespace characters are inserted into the foster parent element 
+        /* When a node node is to be foster parented, the node node  must be
+         * inserted into the foster parent element, and the current table must
+         * be marked as tainted. (Once the current table has been tainted,
+         * whitespace characters are inserted into the foster parent element
          * instead of the current node.) */
         $table->tainted = true;
-        /* If the foster parent element is the parent element of the last table 
-         * element in the stack of open elements, then node must be inserted 
-         * immediately before the last table element in the stack of open 
-         * elements in the foster parent element; otherwise, node must be 
+        /* If the foster parent element is the parent element of the last table
+         * element in the stack of open elements, then node must be inserted
+         * immediately before the last table element in the stack of open
+         * elements in the foster parent element; otherwise, node must be
          * appended to the foster parent element. */
         if ($table->tagName === 'table' && $table->parentNode->isSameNode($foster_parent)) {
             $foster_parent->insertBefore($node, $table);
@@ -3544,14 +3544,14 @@ class TreeBuilder {
             $this->root = $root;
             /* 4.3 Append the element root to the Document node created above. */
             $this->dom->appendChild($root);
-            /* 4.4 Set up the parser's stack of open elements so that it 
+            /* 4.4 Set up the parser's stack of open elements so that it
              * contains just the single element root. */
             $this->stack = array($root);
             /* 4.5 Reset the parser's insertion mode appropriately. */
             $this->resetInsertionMode($context);
-            /* 4.6 Set the parser's form element pointer  to the nearest node 
-             * to the context element that is a form element (going straight up 
-             * the ancestor chain, and including the element itself, if it is a 
+            /* 4.6 Set the parser's form element pointer  to the nearest node
+             * to the context element that is a form element (going straight up
+             * the ancestor chain, and including the element itself, if it is a
              * form element), or, if there is no such form element, to null. */
             $node = $context;
             do {
@@ -3695,10 +3695,10 @@ class TreeBuilder {
         $this->appendToRealParent($el);
         $this->stack[] = $el;
         // XERROR: see below
-        /* If the newly created element has an xmlns attribute in the XMLNS 
-         * namespace  whose value is not exactly the same as the element's 
-         * namespace, that is a parse error. Similarly, if the newly created 
-         * element has an xmlns:xlink attribute in the XMLNS namespace whose 
+        /* If the newly created element has an xmlns attribute in the XMLNS
+         * namespace  whose value is not exactly the same as the element's
+         * namespace, that is a parse error. Similarly, if the newly created
+         * element has an xmlns:xlink attribute in the XMLNS namespace whose
          * value is not the XLink Namespace, that is a parse error. */
     }
 

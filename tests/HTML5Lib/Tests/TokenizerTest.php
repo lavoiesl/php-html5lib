@@ -16,7 +16,7 @@ abstract class TokenizerHarness extends JSONHarness
         if (!isset($test->ignoreErrorOrder)) {
             $test->ignoreErrorOrder = false;
         }
-        
+
         // Get expected result array (and maybe error count).
         $expect = array();
         $expectedErrorCount = 0; // This is only used when ignoreErrorOrder = true.
@@ -33,7 +33,7 @@ abstract class TokenizerHarness extends JSONHarness
                 }
             }
         }
-        
+
         // Run test for each content model flag.
         foreach ($test->contentModelFlags as $flag) {
             $output = $this->tokenize($test, $flag);

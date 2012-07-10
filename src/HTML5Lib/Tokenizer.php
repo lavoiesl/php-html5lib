@@ -119,7 +119,7 @@ class Tokenizer {
         $escape = false;
         //echo "\n\n";
         while($state !== null) {
-            
+
             /*echo $state . ' ';
             switch ($this->content_model) {
                 case self::PCDATA: echo 'PCDATA'; break;
@@ -129,7 +129,7 @@ class Tokenizer {
             }
             if ($escape) echo " escape";
             echo "\n";*/
-            
+
             switch($state) {
                 case 'data':
 
@@ -139,7 +139,7 @@ class Tokenizer {
                     if (strlen($lastFourChars) > 4) $lastFourChars = substr($lastFourChars, -4);
 
                     // see below for meaning
-                    $hyp_cond = 
+                    $hyp_cond =
                         !$escape &&
                         (
                             $this->content_model === self::RCDATA ||
@@ -160,7 +160,7 @@ class Tokenizer {
                              ) &&
                              !$escape
                         );
-                    $gt_cond = 
+                    $gt_cond =
                         $escape &&
                         (
                             $this->content_model === self::RCDATA ||
@@ -238,7 +238,7 @@ class Tokenizer {
                         $this->tree->emitToken(array(
                             'type' => self::EOF
                         ));
-                    
+
                     } elseif($char === "\t" || $char === "\n" || $char === "\x0c" || $char === ' ') {
                         // Directly after emitting a token you switch back to the "data
                         // state". At that point spaceCharacters are important so they are
@@ -256,7 +256,7 @@ class Tokenizer {
                         THIS IS AN OPTIMIZATION: Get as many character that
                         otherwise would also be treated as a character token and emit it
                         as a single character token. Stay in the data state. */
-                        
+
                         $mask = '';
                         if ($hyp_cond) $mask .= '-';
                         if ($amp_cond) $mask .= '&';

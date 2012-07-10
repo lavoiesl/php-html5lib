@@ -43,5 +43,3 @@ Developer notes:
   "foo@bar"). But the current implementation uses it, since it's easy.
   Eventually, this html5lib implementation will get a version of SimpleTree;
   and may possibly start using that by default.
-
-    vim: et sw=4 sts=4

@@ -102,9 +102,8 @@ class TimedTextReporter extends TextReporter
 
 function get_microtime() {
     $microtime = explode(' ', microtime());
-    return $microtime[1] . substr($microtime[0], 1); 
+    return $microtime[1] . substr($microtime[0], 1);
 }
 
 SimpleTest::prefer(new TimedTextReporter());
 
-// vim: et sw=4 sts=4
