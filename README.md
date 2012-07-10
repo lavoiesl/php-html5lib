@@ -11,7 +11,7 @@ not related to parse errors.  Nevertheless, expect to have to update
 your code on the next upgrade.
 
 
-Usage notes:
+## Usage notes
 
 ```php
 <?php
@@ -22,7 +22,7 @@ $nodelist = Parser::parseFragment('<td>Bar</td>', 'table');
 ?>
 ```
 
-Documentation:
+## Documentation
 ```
 Parser::parse($text)
     $text  : HTML to parse
