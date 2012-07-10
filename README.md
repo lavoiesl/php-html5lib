@@ -45,3 +45,11 @@ Parser::parseFragment($text, $context)
     "foo@bar"). But the current implementation uses it, since it's easy.
     Eventually, this html5lib implementation will get a version of SimpleTree;
     and may possibly start using that by default.
+
+  * The original implementation of this performed line and column tracking
+    in place.  However, it was found that this approximately doubled the
+    runtime of tokenization, so we decided to take a more optimistic approach:
+    only calculate line/column numbers when explicitly asked to.  This
+    is slower if we attempt to calculate line/column numbers for everything
+    in the document, but if there is a small enough number of errors it
+    is a great improvement.
