@@ -23,7 +23,7 @@ $nodelist = Parser::parseFragment('<td>Bar</td>', 'table');
 ```
 
 Documentation:
-
+```
 Parser::parse($text)
     $text  : HTML to parse
     return : DOMDocument of parsed document
@@ -32,7 +32,7 @@ Parser::parseFragment($text, $context)
     $text    : HTML to parse
     $context : String name of context element
     return   : DOMDocument of parsed document
-
+```
 
 ## Developer notes
 
