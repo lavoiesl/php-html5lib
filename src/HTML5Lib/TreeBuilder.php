@@ -2,6 +2,7 @@
 
 namespace HTML5Lib;
 use DOMDocument;
+use DOMImplementation;
 
 /*
 
