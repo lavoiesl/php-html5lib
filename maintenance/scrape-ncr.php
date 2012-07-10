@@ -12,9 +12,7 @@ if (file_exists($output)) {
 }
 
 $url = 'http://www.whatwg.org/specs/web-apps/current-work/multipage/named-character-references.html';
-$request = new HttpRequest($url);
-$request->send();
-$html = $request->getResponseBody();
+$html = file_get_contents($url);
 
 preg_match_all(
     '#<code title="">\s*([^<]+?)\s*</code>\s*</td>\s*<td>\s*U+([^<]+?)\s*<#',
