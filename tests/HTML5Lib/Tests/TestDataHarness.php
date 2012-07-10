@@ -1,12 +1,15 @@
 <?php
 
-SimpleTest::ignore('HTML5_TestDataHarness');
-abstract class HTML5_TestDataHarness extends HTML5_DataHarness
+namespace HTML5Lib\Tests;
+use SimpleTest;
+
+SimpleTest::ignore('HTML5Lib\Tests\TestDataHarness');
+abstract class TestDataHarness extends DataHarness
 {
     protected $data;
     public function __construct() {
         parent::__construct();
-        $this->data = new HTML5_TestData($this->filename);
+        $this->data = new TestData($this->filename);
     }
     public function getDescription($test) {
         return $test['data'];

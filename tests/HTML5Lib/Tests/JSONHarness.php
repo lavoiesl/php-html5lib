@@ -1,10 +1,13 @@
 <?php
 
+namespace HTML5Lib\Tests;
+use SimpleTest;
+
 /**
  * Implementation specifically for JSON format files.
  */
-SimpleTest::ignore('HTML5_JSONHarness');
-abstract class HTML5_JSONHarness extends HTML5_DataHarness
+SimpleTest::ignore('HTML5Lib\Tests\JSONHarness');
+abstract class JSONHarness extends DataHarness
 {
     protected $data;
     public function __construct() {

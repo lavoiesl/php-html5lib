@@ -1,16 +1,20 @@
 <?php
 
+namespace HTML5Lib\Tests;
+use HTML5Lib\TreeBuilder;
+use DOMNodeList;
+
 /**
  * Interface for retreiving test files. Also represents a .dat file.
  */
-class HTML5_TestData
+class TestData
 {
     /**
      * Retrieves a list of test filenames from a directory.
      */
     static public function getList($type, $glob) {
         $full_glob =
-            realpath(dirname(__FILE__) . '/../../../testdata/' . $type) .
+            realpath(__DIR__ . '/../../../testdata/' . $type) .
             DIRECTORY_SEPARATOR . $glob;
         return glob($full_glob);
     }
@@ -19,7 +23,7 @@ class HTML5_TestData
      * to test files in the testdata directory.
      */
     static public function generateTestCases($base, $prefix, $type, $glob) {
-        foreach (HTML5_TestData::getList($type, $glob) as $filename) {
+        foreach (self::getList($type, $glob) as $filename) {
             $name = str_replace('-', '', basename($filename));
             $name = ucfirst(substr($name, 0, strcspn($name, '.')));
             if ($type === 'tree-construction') {
@@ -110,24 +114,24 @@ class HTML5_TestData
                 case XML_ELEMENT_NODE:
                     $ns = '';
                     switch ($next->namespaceURI) {
-                    case HTML5_TreeBuilder::NS_MATHML:
+                    case TreeBuilder::NS_MATHML:
                         $ns = 'math '; break;
-                    case HTML5_TreeBuilder::NS_SVG:
+                    case TreeBuilder::NS_SVG:
                         $ns = 'svg '; break;
                     }
                     $text = "<{$ns}{$next->tagName}>";
                     foreach ($next->attributes as $attr) {
                         $ans = '';
                         switch ($attr->namespaceURI) {
-                        case HTML5_TreeBuilder::NS_MATHML:
+                        case TreeBuilder::NS_MATHML:
                             $ans = 'math '; break;
-                        case HTML5_TreeBuilder::NS_SVG:
+                        case TreeBuilder::NS_SVG:
                             $ans = 'svg '; break;
-                        case HTML5_TreeBuilder::NS_XLINK:
+                        case TreeBuilder::NS_XLINK:
                             $ans = 'xlink '; break;
-                        case HTML5_TreeBuilder::NS_XML:
+                        case TreeBuilder::NS_XML:
                             $ans = 'xml '; break;
-                        case HTML5_TreeBuilder::NS_XMLNS:
+                        case TreeBuilder::NS_XMLNS:
                             $ans = 'xmlns '; break;
                         }
                         // XSKETCHY: needed for our horrible xlink hack

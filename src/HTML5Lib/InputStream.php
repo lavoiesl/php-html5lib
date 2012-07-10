@@ -1,5 +1,7 @@
 <?php
 
+namespace HTML5Lib;
+
 /*
 
 Copyright 2009 Geoffrey Sneddon <http://gsnedders.com/>
@@ -29,7 +31,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 // /* */ indicates verbatim text from the HTML 5 specification
 // // indicates regular comments
 
-class HTML5_InputStream {
+class InputStream {
     /**
      * The string data we're parsing.
      */
@@ -90,7 +92,7 @@ class HTML5_InputStream {
         characters is a parse error. */
         for ($i = 0, $count = substr_count($data, "\0"); $i < $count; $i++) {
             $this->errors[] = array(
-                'type' => HTML5_Tokenizer::PARSEERROR,
+                'type' => Tokenizer::PARSEERROR,
                 'data' => 'null-character'
             );
         }
@@ -146,7 +148,7 @@ class HTML5_InputStream {
             );
             for ($i = 0; $i < $count; $i++) {
                 $this->errors[] = array(
-                    'type' => HTML5_Tokenizer::PARSEERROR,
+                    'type' => Tokenizer::PARSEERROR,
                     'data' => 'invalid-codepoint'
                 );
             }

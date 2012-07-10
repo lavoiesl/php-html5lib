@@ -1,12 +1,16 @@
 <?php
 
+namespace HTML5Lib\Tests;
+use UnitTestCase;
+use SimpleTest;
+
 /**
  * Modified test-case supertype for running tests that are not
  * test method based, but based off of test data that resides in
  * files.
  */
-SimpleTest::ignore('HTML5_DataHarness');
-abstract class HTML5_DataHarness extends UnitTestCase
+SimpleTest::ignore('HTML5Lib\Tests\DataHarness');
+abstract class DataHarness extends UnitTestCase
 {
     /**
      * Filled in by HTML5_TestData::generateTestCases()

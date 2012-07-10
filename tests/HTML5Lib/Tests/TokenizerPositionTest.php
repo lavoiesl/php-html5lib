@@ -1,8 +1,12 @@
 <?php
 
-require_once dirname(__FILE__) . '/../autorun.php';
+namespace HTML5Lib\Tests;
+use HTML5Lib\Tokenizer;
+use UnitTestCase;
 
-class HTML5_PositionTestableTokenizer extends HTML5_TestableTokenizer
+require_once __DIR__ . '/../../autorun.php';
+
+class PositionTestableTokenizer extends TestableTokenizer
 {
     public $outputLines = array();
     public $outputCols  = array();
@@ -31,7 +35,7 @@ class HTML5_PositionTestableTokenizer extends HTML5_TestableTokenizer
     }
 }
 
-class HTML5_TokenizerTestOfPosition extends UnitTestCase
+class TokenizerTestOfPosition extends UnitTestCase
 {
     function testBasic() {
         $this->assertPositions(
@@ -153,8 +157,8 @@ class HTML5_TokenizerTestOfPosition extends UnitTestCase
         );
     }
     
-    protected function assertPositions($input, $lines, $cols, $flag = HTML5_Tokenizer::PCDATA, $lastStartTag = null) {
-        $tokenizer = new HTML5_PositionTestableTokenizer($input, $flag, $lastStartTag);
+    protected function assertPositions($input, $lines, $cols, $flag = Tokenizer::PCDATA, $lastStartTag = null) {
+        $tokenizer = new PositionTestableTokenizer($input, $flag, $lastStartTag);
         $GLOBALS['TIME'] -= get_microtime();
         $tokenizer->parse($input);
         $GLOBALS['TIME'] += get_microtime();

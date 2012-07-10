@@ -1,5 +1,7 @@
 <?php
 
+namespace HTML5Lib;
+
 /*
 
 Copyright 2007 Jeroen van der Meer <http://jero.net/>
@@ -33,7 +35,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 // all flags are in hyphenated form
 
-class HTML5_Tokenizer {
+class Tokenizer {
     /**
      * Points to an InputStream object.
      */
@@ -85,8 +87,8 @@ class HTML5_Tokenizer {
      * @param $data Data to parse
      */
     public function __construct($data, $builder = null) {
-        $this->stream = new HTML5_InputStream($data);
-        if (!$builder) $this->tree = new HTML5_TreeBuilder;
+        $this->stream = new InputStream($data);
+        if (!$builder) $this->tree = new TreeBuilder;
         $this->content_model = self::PCDATA;
     }
 
@@ -2150,7 +2152,7 @@ class HTML5_Tokenizer {
                 row with that number in the first column, and return a
                 character token for the Unicode character given in the
                 second column of that row. */
-                $new_codepoint = HTML5_Data::getRealCodepoint($codepoint);
+                $new_codepoint = Data::getRealCodepoint($codepoint);
                 if ($new_codepoint) {
                     $this->emitToken(array(
                         'type' => self::PARSEERROR,
@@ -2189,7 +2191,7 @@ class HTML5_Tokenizer {
 
                 /* Otherwise, return a character token for the Unicode
                 character whose code point is that number. */
-                return HTML5_Data::utf8chr($codepoint);
+                return Data::utf8chr($codepoint);
             }
 
         } else {
@@ -2203,10 +2205,10 @@ class HTML5_Tokenizer {
             // we will implement this by matching the longest
             // alphanumeric + semicolon string, and then working
             // our way backwards
-            $chars .= $this->stream->charsWhile(self::DIGIT . self::ALPHA . ';', HTML5_Data::getNamedCharacterReferenceMaxLength() - 1);
+            $chars .= $this->stream->charsWhile(self::DIGIT . self::ALPHA . ';', Data::getNamedCharacterReferenceMaxLength() - 1);
             $len = strlen($chars);
 
-            $refs = HTML5_Data::getNamedCharacterReferences();
+            $refs = Data::getNamedCharacterReferences();
             $codepoint = false;
             for($c = $len; $c > 0; $c--) {
                 $id = substr($chars, 0, $c);
@@ -2257,7 +2259,7 @@ class HTML5_Tokenizer {
             /* Otherwise, return a character token for the character
             corresponding to the character reference name (as given
             by the second column of the named character references table). */
-            return HTML5_Data::utf8chr($codepoint) . substr($chars, $c);
+            return Data::utf8chr($codepoint) . substr($chars, $c);
         }
     }
 

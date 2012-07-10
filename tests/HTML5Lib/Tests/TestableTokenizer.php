@@ -1,6 +1,11 @@
 <?php
 
-class HTML5_TestableTokenizer extends HTML5_Tokenizer
+namespace HTML5Lib\Tests;
+use HTML5Lib\Tokenizer;
+use UnitTestCase;
+use stdClass;
+
+class TestableTokenizer extends Tokenizer
 {
     public $outputTokens = array();
     private $_contentModelFlag;

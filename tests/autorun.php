@@ -1,12 +1,16 @@
 <?php
 
+require __DIR__ . '/../vendor/autoload.php';
+
+use HTML5Lib\Tokenizer;
+
 $GLOBALS['TIME'] = 0.0;
 
 error_reporting(E_ALL | E_STRICT);
 $simpletest_location = 'simpletest';
 $settings_locations = array(
-    dirname(__FILE__) . '/../conf/test-settings.php',
-    dirname(__FILE__) . '/../test-settings.php',
+    __DIR__ . '/../conf/test-settings.php',
+    __DIR__ . '/../test-settings.php',
 );
 
 foreach ($settings_locations as $location) {
@@ -21,8 +25,8 @@ function __autoload($class) {
 }
 set_include_path(
     get_include_path() . PATH_SEPARATOR .
-    dirname(__FILE__) . PATH_SEPARATOR .
-    dirname(__FILE__) . '/../library'
+    __DIR__ . PATH_SEPARATOR .
+    __DIR__ . '/../src'
 );
 /**
  * Pretty prints a string with ill-formed characters to a Windows
@@ -61,26 +65,26 @@ function str_dump($string) {
  */
 function token_dump($token) {
     switch ($token['type']) {
-    case HTML5_Tokenizer::DOCTYPE:
+    case Tokenizer::DOCTYPE:
         echo "<!doctype ...>\n";
         break;
-    case HTML5_Tokenizer::STARTTAG:
+    case Tokenizer::STARTTAG:
         $attr = '';
         foreach ($token['attr'] as $kp) {
             $attr .= ' '.$kp['name'] . '="' . $kp['value'] . '"';
         }
         echo "<{$token['name']}$attr>\n";
         break;
-    case HTML5_Tokenizer::ENDTAG:
+    case Tokenizer::ENDTAG:
         echo "</{$token['name']}>\n";
         break;
-    case HTML5_Tokenizer::COMMENT:
+    case Tokenizer::COMMENT:
         echo "<!-- {$token['data']} -->\n";
         break;
-    case HTML5_Tokenizer::CHARACTER:
+    case Tokenizer::CHARACTER:
         echo '"'.$token['data'].'"'."\n";
         break;
-    case HTML5_Tokenizer::EOF:
+    case Tokenizer::EOF:
         echo "EOF\n";
         break;
     }

@@ -1,8 +1,10 @@
 <?php
 
+namespace HTML5Lib;
+
 // warning: this file is encoded in UTF-8!
 
-class HTML5_Data
+class Data
 {
 
     // at some point this should be moved to a .ser file. Another
@@ -60,7 +62,7 @@ class HTML5_Data
     public static function getNamedCharacterReferences() {
         if (!self::$namedCharacterReferences) {
             self::$namedCharacterReferences = unserialize(
-                file_get_contents(dirname(__FILE__) . '/named-character-references.ser'));
+                file_get_contents(__DIR__ . '/named-character-references.ser'));
         }
         return self::$namedCharacterReferences;
     }

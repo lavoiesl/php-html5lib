@@ -5,7 +5,7 @@
  * website.
  */
 
-$output = dirname(__FILE__) . '/../library/HTML5/named-character-references.ser';
+$output = __DIR__ . '/../src/HTML5Lib/named-character-references.ser';
 if (file_exists($output)) {
     echo 'Output file '.realpath($output).' already exists; delete it first';
     exit;

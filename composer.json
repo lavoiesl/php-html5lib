@@ -1,0 +1,13 @@
+{
+    "name":"lavoiesl/php-html5lib"
+    ,"type":"library"
+    ,"require": {
+        "php":">=5.3.2"
+    }
+    ,"autoload":{
+        "psr-0":{
+            "HTML5Lib":"src/"
+            ,"HTML5Lib\\Tests":"tests/"
+        }
+    }
+}

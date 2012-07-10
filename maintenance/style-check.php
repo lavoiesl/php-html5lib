@@ -15,7 +15,7 @@ function style_check($dir) {
 
 function style_correct($file) {
     $exclude_prefixes = array(
-        './tests/HTML5/testdata/',
+        './tests/HTML5Lib/Tests/testdata/',
     );
     $exclude_extensions = array();
     foreach ($exclude_prefixes as $p) {
@@ -70,7 +70,7 @@ function style_add_vimline($file, $contents) {
     return $contents;
 }
 
-chdir(dirname(__FILE__) . '/..');
+chdir(__DIR__ . '/..');
 style_check('.');
 
 // vim: et sw=4 sts=4
