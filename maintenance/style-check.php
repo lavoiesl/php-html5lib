@@ -2,8 +2,9 @@
 
 /**
  * This script enforces several style constraints:
- *      - Converts tabs to spaces
- *      - Remove trailing spaces
+ *  - Converts tabs to spaces
+ *  - Remove trailing spaces
+ *  - Ensure newline at end of file
  */
 
 function style_check($dir) {
@@ -33,6 +34,9 @@ function style_correct($file) {
 
     // Trailing whitespace
     $contents = preg_replace('/ +$/m', '', $contents);
+
+    // Ensure newline at end of file
+    $contents = preg_replace('/\s+$/', "\n", $contents);
 
     if ($orig !== $contents) {
         echo "$file\n";

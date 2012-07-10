@@ -10,4 +10,3 @@ function run_all_tests($base) {
 }
 
 run_all_tests(__DIR__ . '/HTML5Lib/Tests');
-

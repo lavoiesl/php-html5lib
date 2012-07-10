@@ -2306,4 +2306,3 @@ class Tokenizer {
         }
     }
 }
-

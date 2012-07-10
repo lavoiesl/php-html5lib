@@ -106,4 +106,3 @@ function get_microtime() {
 }
 
 SimpleTest::prefer(new TimedTextReporter());
-

@@ -40,4 +40,3 @@ TestData::generateTestCases(
     'HTML5Lib\Tests\TreeBuilderTestOf',
     'tree-construction', '*.dat'
 );
-

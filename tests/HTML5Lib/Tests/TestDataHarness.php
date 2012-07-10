@@ -18,4 +18,3 @@ abstract class TestDataHarness extends DataHarness
         return $this->data->tests;
     }
 }
-
